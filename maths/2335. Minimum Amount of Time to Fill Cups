@@ -1,0 +1,23 @@
+# 2335. Minimum Amount of Time to Fill Cups
+
+## Approach
+1. Sort the three amounts so `x` is the largest, `y` the middle, and `z` the smallest
+2. If `x >= y + z`, the biggest pile can't be paired with enough others, so it sets the pace and the answer is `x`
+3. Otherwise every second can fill 2 cups until the end, so the answer is `ceil((x + y + z) / 2)`, written as `(x + y + z + 1) // 2`
+
+## Complexity
+Time: O(1), since the array always has 3 elements  
+Aux Space: O(1)
+
+## Solution
+```python
+class Solution:
+    def fillCups(self, amount: list[int]) -> int:
+        amount = sorted(amount)
+        x, y, z = amount[2], amount[1], amount[0]
+
+        if x >= y + z:
+            return x
+        else:
+            return (x + y + z + 1) // 2
+```
