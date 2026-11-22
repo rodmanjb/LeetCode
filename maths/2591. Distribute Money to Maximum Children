@@ -1,0 +1,32 @@
+# 2591. Distribute Money to Maximum Children
+
+## Approach
+1. If `money < children`, someone gets nothing, so return `-1`
+2. Give every child 1 dollar first, then each child that gets to 8 needs 7 more
+3. Hand out 7 at a time while there's enough money and children left, counting each as one child with exactly 8
+4. Fix the edge cases:
+   - If every child got 8 but there's money left over, someone has to take extra, so drop the count by 1
+   - If only one child is left and the leftover is exactly 3, that child would end up with 4, so drop the count by 1
+5. Otherwise return the count
+
+## Complexity
+Time: O(children), since the loop runs at most `children` times  
+Aux Space: O(1)
+
+## Solution
+```python
+class Solution:
+    def distMoney(self, money: int, children: int) -> int:
+        count = 0
+        if money < children:
+            return -1
+        money -= children
+        while money >= 7 and count < children:
+            money -= 7
+            count += 1
+        if count == children and money > 0:
+            return count - 1
+        if count == children-1 and money == 3:
+            return count - 1
+        return count
+```
